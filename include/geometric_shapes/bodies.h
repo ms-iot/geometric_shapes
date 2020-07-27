@@ -37,10 +37,8 @@
 #ifndef GEOMETRIC_SHAPES_BODIES_
 #define GEOMETRIC_SHAPES_BODIES_
 
-#define _USE_MATH_DEFINES
-
-#if __cplusplus <= 199711L
-//#error This header requires at least C++11
+#if __cplusplus <= 199711L && ! defined (WIN32)
+#error This header requires at least C++11
 #endif
 
 #include "geometric_shapes/aabb.h"
@@ -51,7 +49,6 @@
 #include <Eigen/Geometry>
 #include <memory>
 #include <vector>
-#include <geometric_shapes/visibility_control.hpp>
 
 /** \brief This set of classes allows quickly detecting whether a given point
    is inside an object or not. This capability is useful when removing
@@ -88,7 +85,7 @@ typedef std::shared_ptr<const Body> BodyConstPtr;
 /** \brief A body is a shape + its pose. Point inclusion, ray
     intersection can be tested, volumes and bounding spheres can
     be computed.*/
-class GEOMETRIC_SHAPES_PUBLIC Body
+class Body
 {
 public:
   Body() : scale_(1.0), padding_(0.0), type_(shapes::UNKNOWN_SHAPE)
@@ -290,7 +287,7 @@ public:
 };
 
 /** \brief Definition of a sphere */
-class GEOMETRIC_SHAPES_PUBLIC Sphere : public Body
+class Sphere : public Body
 {
 public:
   Sphere() : Body()
@@ -342,7 +339,7 @@ public:
 };
 
 /** \brief Definition of a cylinder */
-class GEOMETRIC_SHAPES_PUBLIC Cylinder : public Body
+class Cylinder : public Body
 {
 public:
   Cylinder() : Body()
@@ -404,7 +401,7 @@ public:
 };
 
 /** \brief Definition of a box */
-class GEOMETRIC_SHAPES_PUBLIC Box : public Body
+class Box : public Body
 {
 public:
   Box() : Body()
@@ -466,7 +463,7 @@ public:
 };
 
 /** \brief Definition of a convex mesh. Convex hull is computed for a given shape::Mesh */
-class GEOMETRIC_SHAPES_PUBLIC ConvexMesh : public Body
+class ConvexMesh : public Body
 {
 public:
   ConvexMesh() : Body()
@@ -560,7 +557,7 @@ public:
 /** @class BodyVector
  *  @brief A vector of Body objects
  */
-class GEOMETRIC_SHAPES_PUBLIC BodyVector
+class BodyVector
 {
 public:
   BodyVector();
@@ -607,11 +604,9 @@ private:
 };
 
 /** \brief Shared pointer to a Body */
-GEOMETRIC_SHAPES_PUBLIC
 typedef std::shared_ptr<Body> BodyPtr;
 
 /** \brief Shared pointer to a const Body */
-GEOMETRIC_SHAPES_PUBLIC
 typedef std::shared_ptr<const Body> BodyConstPtr;
 }  // namespace bodies
 

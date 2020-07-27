@@ -8,6 +8,10 @@ if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
 endif()
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  add_compile_options(/Zc:__cplusplus /D_USE_MATH_DEFINES)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
@@ -99,12 +103,6 @@ if(BUILD_TESTING)
   # Unit tests
   add_subdirectory(test)
 endif()
-
-# Causes the visibility macros to use dllexport rather than dllimport,
-# which is appropriate when building the dll but not consuming it.
-target_compile_definitions(${PROJECT_NAME}
-  PRIVATE "GEOMETRIC_SHAPES_BUILDING_LIBRARY")
-
 
 install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION lib
