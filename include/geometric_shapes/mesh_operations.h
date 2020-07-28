@@ -42,7 +42,7 @@
 #include <vector>
 
 // forward declaration of aiScene (caller needs to include assimp if aiScene is used)
-struct aiScene;
+class aiScene;
 
 namespace shapes
 {
