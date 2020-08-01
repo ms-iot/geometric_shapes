@@ -912,7 +912,12 @@ void bodies::ConvexMesh::useDimensions(const shapes::Shape* shape)
   mesh_data_->bounding_cylinder_.radius = maxdist;
   mesh_data_->bounding_cylinder_.length = cyl_length;
 
-  static FILE* null = fopen("/dev/null", "w");
+  static FILE* null;
+#ifdef WIN32
+  null = fopen("nul", "w");
+#else
+  null = fopen("/dev/null", "w");
+#endif
 
   char flags[] = "qhull Tv Qt";
   qhT qh_qh;

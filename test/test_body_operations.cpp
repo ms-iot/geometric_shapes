@@ -32,6 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
 
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <geometric_shapes/body_operations.h>
 #include <geometric_shapes/shape_operations.h>
 #include <boost/filesystem.hpp>
