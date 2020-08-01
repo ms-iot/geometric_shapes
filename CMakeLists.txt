@@ -1,9 +1,15 @@
 cmake_minimum_required(VERSION 3.5)
 project(geometric_shapes)
 
+set(CURL_NO_CURL_CMAKE ON)
+
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  add_compile_options(/Zc:__cplusplus /D_USE_MATH_DEFINES)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
@@ -79,7 +85,7 @@ ament_export_dependencies(
   Eigen3
   eigen3_cmake_module  # export Eigen3 headers
   Boost
-  ASSIMP
+  # ASSIMP
   random_numbers
   eigen_stl_containers
   shape_msgs
@@ -89,6 +95,8 @@ target_link_libraries(${PROJECT_NAME}
 # resource_retriever doesn't support ament export hook (fixed in 2.1.1)
   resource_retriever::resource_retriever
 )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
